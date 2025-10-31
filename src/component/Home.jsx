@@ -28,7 +28,7 @@ function Home() {
 
       <div className="rounded-full border border-blue-300 h-40 w-40 mb-12">
         <img
-          src="src/assets/favicon.png"
+          src="https://res.cloudinary.com/def9quyti/image/upload/v1761912705/ChatGPT_Image_Oct_31_2025_12_06_47_PM_bseihs.png"
           alt="quiz"
           className="object-fit h-40 w-40 rounded-full"
         />

@@ -14,7 +14,7 @@ function QuizPage() {
         <div className="flex item-center justify-between w-80 mt-4 text-[32px] mx-auto">
           <i className="ri-bar-chart-horizontal-line text-lg font-bold"></i>
           <img
-            src="src/assets/favicon.png"
+            src="https://res.cloudinary.com/def9quyti/image/upload/v1761912705/ChatGPT_Image_Oct_31_2025_12_06_47_PM_bseihs.png"
             alt="avatar"
             className="w-[32px] h-[32px] rounded-full"
           />
