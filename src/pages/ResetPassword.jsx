@@ -26,19 +26,6 @@ useEffect(() => {
   });
 }, [oobCode, mode]);
 
-//   const oobCode = searchParams.get("oobCode"); // Firebase code from the email link
-
-//   useEffect(() => {
-//     if (!oobCode) {
-//       setError("Invalid password reset link.");
-//       return;
-//     }
-
-//     // Verify the code is valid
-//     verifyPasswordResetCode(auth, oobCode).catch(() => {
-//       setError("Expired or invalid link.");
-//     });
-//   }, [oobCode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
