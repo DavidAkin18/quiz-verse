@@ -11,19 +11,34 @@ export default function ResetPassword() {
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const oobCode = searchParams.get("oobCode"); // Firebase code from the email link
+const oobCode = searchParams.get("oobCode"); // Firebase code
+const mode = searchParams.get("mode");       // should be "resetPassword"
 
-  useEffect(() => {
-    if (!oobCode) {
-      setError("Invalid password reset link.");
-      return;
-    }
+useEffect(() => {
+  if (!oobCode || mode !== "resetPassword") {
+    setError("Invalid or expired password reset link.");
+    return;
+  }
 
-    // Verify the code is valid
-    verifyPasswordResetCode(auth, oobCode).catch(() => {
-      setError("Expired or invalid link.");
-    });
-  }, [oobCode]);
+  // Verify the code is valid
+  verifyPasswordResetCode(auth, oobCode).catch(() => {
+    setError("Expired or invalid link.");
+  });
+}, [oobCode, mode]);
+
+//   const oobCode = searchParams.get("oobCode"); // Firebase code from the email link
+
+//   useEffect(() => {
+//     if (!oobCode) {
+//       setError("Invalid password reset link.");
+//       return;
+//     }
+
+//     // Verify the code is valid
+//     verifyPasswordResetCode(auth, oobCode).catch(() => {
+//       setError("Expired or invalid link.");
+//     });
+//   }, [oobCode]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
