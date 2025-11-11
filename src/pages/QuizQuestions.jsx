@@ -17,6 +17,8 @@ function QuizQuestions() {
 
   const tabContainerRef = useRef(null); // 👈 for auto-scroll
   const tabRefs = useRef([]); // 👈 store individual tab refs
+  const { user } = useUserStore();
+
 
   useEffect(() => {
     if (questionsData[title]) setQuestions(questionsData[title]);
@@ -49,13 +51,22 @@ function QuizQuestions() {
   const handleSelect = (option) =>
     setSelectedAnswers({ ...selectedAnswers, [activeQuestion]: option });
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     let newScore = 0;
     questions.forEach((q, i) => {
       if (selectedAnswers[i + 1] === q.answer) newScore++;
     });
     setScore(newScore);
     setIsSubmitted(true);
+
+    if (user) {
+      await addDoc(collection(db, "leaderboard"), {
+        username: user.email,
+        score: newScore,
+        quizTitle: title,
+        createdAt: new Date(),
+      });
+    }
   };
 
   const formatTime = (t) => {

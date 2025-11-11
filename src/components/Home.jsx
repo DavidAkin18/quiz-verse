@@ -42,7 +42,7 @@ function Home() {
           WELCOME
         </h1>
 
-        <label className="mt-4 text-center">
+        {/* <label className="mt-4 text-center">
           Please Enter Your Name
           <input
             type="text"
@@ -51,13 +51,12 @@ function Home() {
             onKeyDown={handleKeyPress} // ✅ Enter key support
             className="border-2 rounded-lg px-2 py-1 w-full my-4 focus:outline-none focus:ring-2 focus:ring-[#27E9F7]"
           />
-        </label>
-
+        </label> */}
+        <link to=''></link>
         <button
-          onClick={handleSubmit}
           className="bg-quiz-gradient p-4 py-2 w-full rounded-lg text-white font-bold hover:opacity-90 transition"
         >
-          Submit
+          Join Us
         </button>
 
         {errorMessage && (

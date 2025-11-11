@@ -1,10 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import QuizTabs from "./QuizTabs";
+import QuizTabs from "../components/QuizTabs";
 
 function QuizPage() {
   const location = useLocation();
-  const { username } = location.state || {}; // safely get username
+  const { firstName } = location.state || {};
   const [searchQuery, setSearchQuery] = useState("");
 
   return (
@@ -22,7 +22,7 @@ function QuizPage() {
 
         {/* Greeting */}
         <div className="relative w-80 mt-4 mx-auto">
-          <h1 className="text-sm mb-2">Hello, {username || "Guest"}!</h1>
+          <h1 className="text-sm mb-2">Hello, {firstName || "Guest"}!</h1>
           <p className="text-xl font-bold">Let’s test your Knowledge</p>
         </div>
 
