@@ -1,54 +1,62 @@
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
+import Sidebar from "../layout/Sidebar";
+import MobileHeader from "../layout/MobileHeader";
 import QuizTabs from "../components/QuizTabs";
 
 function QuizPage() {
-  const location = useLocation();
-  const { firstName } = location.state || {};
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [difficulty, setDifficulty] = useState("All");
+  const [activeTab, setActiveTab] = useState("Quiz"); // internal tabs if needed
+
+  const user = {
+    name: "David",
+    profileImg: "https://res.cloudinary.com/def9quyti/image/upload/v1761912705/ChatGPT_Image_Oct_31_2025_12_06_47_PM_bseihs.png",
+  };
+
+  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   return (
-    <div className="bg-quiz-gradient min-h-screen">
-      <div className="p-4 pt-8 text-white">
-        {/* Header */}
-        <div className="flex item-center justify-between w-80 mt-4 text-[32px] mx-auto">
-          <i className="ri-bar-chart-horizontal-line text-lg font-bold"></i>
-          <img
-            src="https://res.cloudinary.com/def9quyti/image/upload/v1761912705/ChatGPT_Image_Oct_31_2025_12_06_47_PM_bseihs.png"
-            alt="avatar"
-            className="w-[32px] h-[32px] rounded-full"
-          />
+    <div className="flex min-h-screen bg-quiz-gradient">
+      <Sidebar user={user} sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} activePage="/quiz" />
+      <MobileHeader toggleSidebar={toggleSidebar} user={user} />
+
+      <main className="flex-1 flex flex-col items-center p-4 pt-20 lg:pt-8 text-white ml-0 lg:ml-64 transition-all duration-300">
+        {/* Greeting & Search */}
+        <div className="w-full max-w-2xl text-center">
+          <h1 className="text-sm mb-2 text-quiz-darkText">Hello, {user.name}!</h1>
+          <p className="text-xl font-bold text-quiz-darkText">Let’s test your Knowledge</p>
+
+          <div className="relative mt-4">
+            <i className="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-xl text-transparent bg-clip-text bg-quiz-gradient"></i>
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-quiz-primary text-quiz-dark"
+            />
+          </div>
+
+          <div className="mt-4 flex justify-center gap-2">
+            {["All", "Easy", "Medium", "Hard"].map((level) => (
+              <button
+                key={level}
+                className={`px-3 py-1 rounded-full border transition-all duration-200 ${
+                  difficulty === level ? "bg-quiz-gradient text-white border-none" : "bg-quiz-dark text-white border-none hover:opacity-80"
+                }`}
+                onClick={() => setDifficulty(level)}
+              >
+                {level}
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Greeting */}
-        <div className="relative w-80 mt-4 mx-auto">
-          <h1 className="text-sm mb-2">Hello, {firstName || "Guest"}!</h1>
-          <p className="text-xl font-bold">Let’s test your Knowledge</p>
+        <div className="w-full min-h-screen sm:max-w-4xl mt-6 text-quiz-dark">
+          <QuizTabs searchQuery={searchQuery} difficulty={difficulty} />
         </div>
-
-        {/* Search Bar */}
-        <div className="relative w-80 mt-4 mx-auto">
-          {/* Left icon */}
-          <i className="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-transparent bg-clip-text bg-gradient-to-r from-[#3550DC] to-[#27E9F7] text-xl"></i>
-
-          {/* Input */}
-          <input
-            type="text"
-            placeholder="Search"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-10 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-[#3550DC] text-black"
-          />
-
-          {/* Right icon */}
-          <i className="ri-arrow-left-right-line absolute right-3 top-1/2 -translate-y-1/2 text-transparent bg-clip-text bg-gradient-to-r from-[#3550DC] to-[#27E9F7] text-xl"></i>
-        </div>
-      </div>
-
-      {/* Quiz List */}
-      <div className="md:w-4/5 w-full mx-auto min-h-screen rounded-t-2xl p-4 bg-white">
-        <QuizTabs searchQuery={searchQuery} />
-      </div>
+      </main>
     </div>
   );
 }

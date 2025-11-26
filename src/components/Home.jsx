@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,Link } from "react-router-dom";
 
 function Home() {
   const [name, setName] = useState("");
@@ -42,22 +42,13 @@ function Home() {
           WELCOME
         </h1>
 
-        {/* <label className="mt-4 text-center">
-          Please Enter Your Name
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={handleKeyPress} // ✅ Enter key support
-            className="border-2 rounded-lg px-2 py-1 w-full my-4 focus:outline-none focus:ring-2 focus:ring-[#27E9F7]"
-          />
-        </label> */}
-        <link to=''></link>
-        <button
-          className="bg-quiz-gradient p-4 py-2 w-full rounded-lg text-white font-bold hover:opacity-90 transition"
-        >
-          Join Us
-        </button>
+        <Link to='/signin'>
+          <button
+            className="bg-quiz-gradient p-4 py-2 w-full rounded-lg text-white font-bold hover:opacity-90 transition"
+          >
+            Join Us
+          </button>
+        </Link>
 
         {errorMessage && (
           <p className="text-red-600 font-medium mt-2">{errorMessage}</p>

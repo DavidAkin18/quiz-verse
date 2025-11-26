@@ -31,7 +31,14 @@ function QuestionDetails() {
         </p>
 
         <button
-          onClick={() => navigate("/questions", { state: { title } })}
+          onClick={() =>
+            navigate("/questions", {
+              state: { 
+                title, 
+                difficulty: location.state?.difficulty || "all" // ✅ pass difficulty
+              },
+            })
+          }
           className="bg-white text-[#3550DC] font-semibold rounded-lg px-6 py-3 mt-8 hover:scale-105 transition"
         >
           Start Quiz

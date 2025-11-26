@@ -5,3 +5,68 @@
 .text-quiz-gradient {
   @apply text-transparent bg-clip-text bg-gradient-to-r from-[#3550DC] to-[#27E9F7];
 }
+
+
+.category-tabs-wrapper {
+  width: 100%;
+  overflow-x: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+/* The horizontal scroll container */
+.category-tabs {
+  display: flex;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  border-bottom: 1px solid #d1d5db;
+
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+
+  /* This was missing — this is what fixes the expanding width issue */
+  white-space: nowrap;
+}
+
+/* Hide scrollbar */
+.category-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+/* individual tabs */
+.category-tab {
+  flex-shrink: 0;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background-color: #e5e7eb;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.category-tab.active {
+  background: linear-gradient(to right, #3550DC, #27E9F7);
+  color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slideUp {
+  animation: slideUp 0.4s ease forwards;
+}

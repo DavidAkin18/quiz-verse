@@ -13,10 +13,10 @@ export default function App() {
   return (
     <div className="">
       <Routes>
-        <Route path='/' element={<SignUp/>}/>
+        <Route path='/' element={<Home/>}/>
         <Route path='/signin' element={<SignIn/>}/>
         <Route path='/signup' element={<SignUp/>}/>
-        <Route path='/home' element={<Home/>}/>
+        {/* <Route path='/home' element={<Home/>}/> */}
         <Route path='/quiz' element={<QuizPage/>}/>
         <Route path='/quiz-details' element={<QuizDetails/>}/>
         <Route path='/questions' element={<QuizQuestions/>}/>

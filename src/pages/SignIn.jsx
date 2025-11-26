@@ -1,7 +1,5 @@
-// src/pages/SignIn.jsx
 import { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { sendPasswordResetEmail } from "firebase/auth";
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { auth, db } from "../utils/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import AuthLayout from "../components/AuthLayout";
@@ -32,46 +30,48 @@ export default function SignIn() {
         setFirstName(name);
       }
 
-      // ✅ Navigate to Quiz page and pass first name
+      // ✅ Navigate to Quiz page
       navigate("/quiz", { state: { firstName: name } });
     } catch (err) {
       console.error("Login error:", err);
       setError("Invalid email or password. Please try again.");
     }
   };
+
   const handleForgotPassword = async () => {
     if (!email) {
-        setError("Please enter your email to reset your password.");
-        return;
+      setError("Please enter your email to reset your password.");
+      return;
     }
 
     try {
-        await sendPasswordResetEmail(auth, email);
-        setError(""); // clear any previous error
-        alert("Password reset email sent! Check your inbox.");
+      await sendPasswordResetEmail(auth, email);
+      setError("");
+      alert("Password reset email sent! Check your inbox.");
     } catch (err) {
-        console.error("Password reset error:", err);
-        setError("Failed to send password reset email. Please check your email and try again.");
+      console.error("Password reset error:", err);
+      setError("Failed to send password reset email. Please check your email and try again.");
     }
-    };
+  };
 
   return (
     <AuthLayout
       title={
         <>
           Hello{firstName ? `, ${firstName}` : ""} <br />
-          Welcome back to QuizVerse!
+          <span className="text-quiz-primary">Welcome back to QuizVerse!</span>
         </>
       }
     >
-      <form onSubmit={handleLogin} className="space-y-4 mt-4">
+      <form onSubmit={handleLogin} className="space-y-5 mt-4 min-h-screen md:min-h-0">
+        {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email Address <span className="text-[#3550DC] font-bold">*</span>
+          <label className="block text-sm font-medium text-quiz-dark mb-1">
+            Email Address <span className="text-quiz-primary font-bold">*</span>
           </label>
           <input
             type="email"
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+            className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
             placeholder="What's your email?"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -79,13 +79,14 @@ export default function SignIn() {
           />
         </div>
 
+        {/* Password */}
         <div className="relative">
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Password <span className="text-[#3550DC] font-bold">*</span>
+          <label className="block text-sm font-medium text-quiz-dark mb-1">
+            Password <span className="text-quiz-primary font-bold">*</span>
           </label>
           <input
             type={showPassword ? "text" : "password"}
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+            className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
             placeholder="Enter your password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -93,35 +94,40 @@ export default function SignIn() {
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-3 top-6 flex items-center cursor-pointer text-gray-500 hover:text-gray-700"
+            className="absolute inset-y-0 right-3 top-6 flex items-center cursor-pointer text-gray-500 hover:text-quiz-primary"
           >
-            <i
-              className={`ri-${
-                showPassword ? "eye-line" : "eye-off-line"
-              } text-xl`}
-            />
+            <i className={`ri-${showPassword ? "eye-line" : "eye-off-line"} text-xl`} />
           </span>
         </div>
 
+        {/* Error */}
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <div className="text-right text-sm text-[#3550DC]">
-            <Link to="/forgot-password">Forgot password?</Link>
+        {/* Forgot Password */}
+        <div className="text-right text-sm">
+          <button
+            type="button"
+            onClick={handleForgotPassword}
+            className="text-quiz-primary hover:underline"
+          >
+            Forgot password?
+          </button>
         </div>
 
-
+        {/* Login Button */}
         <button
           type="submit"
-          className="w-full py-2 font-semibold text-white rounded-md bg-gradient-to-r from-[#3550DC] to-[#27E9F7]"
+          className="w-full py-2 font-semibold text-white rounded-md bg-quiz-gradient hover:opacity-90 transition"
         >
           LOGIN <i className="ri-arrow-right-line ml-1"></i>
         </button>
 
+        {/* Signup Link */}
         <p className="text-sm text-gray-600 text-left mt-4">
-          New to QuizVerse?{" "}
+          New to <span className="font-semibold text-quiz-primary">QuizVerse?</span>{" "}
           <Link
             to="/signup"
-            className="text-[#3550DC] font-semibold hover:underline"
+            className="text-quiz-secondary font-semibold hover:underline"
           >
             Create an account
           </Link>

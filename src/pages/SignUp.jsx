@@ -1,4 +1,3 @@
-// src/pages/SignUp.jsx
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../utils/firebase";
@@ -51,21 +50,26 @@ export default function SignUp() {
       // ✅ Redirect to SignIn page
       navigate("/signin");
     } catch (err) {
-      setError(err.message);
+      console.error("Signup error:", err);
+      setError("Failed to create account. Please try again.");
     }
   };
 
   return (
     <AuthLayout
-      title="Create an account"
-      subtitle="Fill in the following information to get started"
+      title="Create your QuizVerse Account"
+      subtitle="Fill in the following details to get started"
     >
-      <form onSubmit={handleSignUp} className="space-y-4 mt-4">
+      <form
+        onSubmit={handleSignUp}
+        className="space-y-5 mt-4 min-h-screen md:min-h-0"
+      >
+        {/* Name Fields */}
         <div className="grid grid-cols-2 gap-4">
           <input
             type="text"
             placeholder="First Name"
-            className="p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+            className="p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
             value={user.first}
             onChange={(e) => setUser({ ...user, first: e.target.value })}
             required
@@ -73,87 +77,94 @@ export default function SignUp() {
           <input
             type="text"
             placeholder="Last Name"
-            className="p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+            className="p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
             value={user.last}
             onChange={(e) => setUser({ ...user, last: e.target.value })}
             required
           />
         </div>
 
+        {/* Email */}
         <input
           type="email"
           placeholder="Email Address"
-          className="w-full p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+          className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
           value={user.email}
           onChange={(e) => setUser({ ...user, email: e.target.value })}
           required
         />
 
+        {/* Password */}
         <div className="relative">
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Password"
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+            className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
             value={user.password}
             onChange={(e) => setUser({ ...user, password: e.target.value })}
             required
           />
           <span
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-3 top-0 flex items-center cursor-pointer text-gray-500 hover:text-gray-700"
+            className="absolute inset-y-0 right-3 top-0 flex items-center cursor-pointer text-gray-500 hover:text-quiz-primary"
           >
             <i className={`ri-${showPassword ? "eye-line" : "eye-off-line"} text-xl`} />
           </span>
         </div>
 
+        {/* Confirm Password */}
         <div className="relative">
           <input
             type={showRepeat ? "text" : "password"}
             placeholder="Confirm Password"
-            className="w-full p-2 border border-gray-300 rounded-md bg-[#EDEDF9]"
+            className="w-full p-2 border border-gray-300 rounded-md bg-gray-100 focus:ring-2 focus:ring-quiz-primary focus:outline-none"
             value={user.confirm}
             onChange={(e) => setUser({ ...user, confirm: e.target.value })}
             required
           />
           <span
             onClick={() => setShowRepeat(!showRepeat)}
-            className="absolute inset-y-0 right-3 top-0 flex items-center cursor-pointer text-gray-500 hover:text-gray-700"
+            className="absolute inset-y-0 right-3 top-0 flex items-center cursor-pointer text-gray-500 hover:text-quiz-primary"
           >
             <i className={`ri-${showRepeat ? "eye-line" : "eye-off-line"} text-xl`} />
           </span>
         </div>
 
+        {/* Error Message */}
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
+        {/* Register Button */}
         <button
           type="submit"
           disabled={!isValid}
           className={`w-full py-2 font-semibold rounded-md transition ${
             isValid
-              ? "bg-gradient-to-r from-[#3550DC] to-[#27E9F7] text-white"
+              ? "bg-quiz-gradient text-white hover:opacity-90"
               : "bg-gray-300 text-gray-600 cursor-not-allowed"
           }`}
         >
           REGISTER <i className="ri-arrow-right-line ml-1"></i>
         </button>
 
+        {/* Sign In Link */}
         <p className="text-sm text-gray-600 text-left mt-4">
           Already have an account?{" "}
           <Link
             to="/signin"
-            className="text-[#3550DC] font-semibold hover:underline"
+            className="text-quiz-primary font-semibold hover:underline"
           >
             Sign In
           </Link>
         </p>
 
+        {/* Terms & Privacy */}
         <p className="text-xs text-gray-500 text-left mt-4">
-          By creating an account, I confirm I have read and understood the{" "}
-          <a href="#" className="text-[#3550DC] hover:underline">
+          By creating an account, I confirm that I have read and understood the{" "}
+          <a href="#" className="text-quiz-primary hover:underline">
             Privacy Policy
           </a>{" "}
           and{" "}
-          <a href="#" className="text-[#3550DC] hover:underline">
+          <a href="#" className="text-quiz-primary hover:underline">
             Terms of Use
           </a>.
         </p>
